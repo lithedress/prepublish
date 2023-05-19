@@ -1,0 +1,34 @@
+[package]
+name = "prepublish"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+members = ["crud", "crud-derive", "migration", "mongo", "notice"]
+
+[dependencies]
+aide = { version = "0.11.0", features = ["axum-multipart", "axum", "macros"] }
+async-trait = "0.1.68"
+axum = { version = "0.6.18", features = ["macros", "multipart"] }
+axum-jsonschema = { version = "0.6.0", features = ["aide"] }
+axum-sessions = "0.5.0"
+chrono = "0.4.24"
+config = "0.13.3"
+crud = { path = "./crud" }
+crud-derive = { path = "./crud-derive" }
+futures-util = "0.3.28"
+futures_codec = "0.4.1"
+mongo = { path = "./mongo" }
+notice = { path = "./notice" }
+passwords = { version = "3.1.13", features = ["crypto"] }
+schemars = { version = "0.8.12", features = ["url"] }
+sea-orm = { version = "0.11.3", features = [
+    "sqlx-postgres",
+    "runtime-async-std-native-tls",
+] }
+serde = { version = "1.0.162", features = ["derive"] }
+serde_json = "1.0.96"
+serde_with = "3.0.0"
+thiserror = "1.0.40"
+tokio = { version = "1.28.0", features = ["full"] }
+url = { version = "2.3.1", features = ["serde"] }
