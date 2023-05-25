@@ -1,4 +1,4 @@
-pub use lettre::Address;
+ pub use lettre::Address;
 use schemars::{
     _serde_json::Value,
     gen::SchemaGenerator,

@@ -1,4 +1,5 @@
 use config::{Config, Environment};
+use lettre::message::Mailbox;
 use serde::{Deserialize, Serialize};
 
 fn default_sql_db_url() -> String {
@@ -21,6 +22,14 @@ fn default_hash_cost() -> u8 {
     4
 }
 
+fn default_mail_box() -> Mailbox {
+    "<root@localhost>".parse().unwrap()
+}
+
+fn default_relay() -> String {
+    "localhost".to_string()
+}
+
 #[derive(Serialize, Deserialize)]
 #[derive(Eq, PartialEq)]
 #[derive(Clone)]
@@ -36,6 +45,12 @@ pub struct AppConfig {
     pub(crate) srv_addr: String,
     #[serde(default = "default_hash_cost")]
     pub(crate) hash_cost: u8,
+    #[serde(default = "default_mail_box")]
+    pub(crate) sender: Mailbox,
+    #[serde(default = "default_relay")]
+    pub(crate) relay: String,
+    pub(crate) smtp_username: String,
+    pub(crate) smtp_password: String,
 }
 
 impl AppConfig {

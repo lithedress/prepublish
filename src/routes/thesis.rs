@@ -67,7 +67,7 @@ impl ShowCfg for ShowAuth {
         _db: mongo::MongoDatabase,
         model: &Entity<Self::D>,
     ) -> super::common::err::Result<bool> {
-        Ok(model.data.is_public || authenticate(auth_info, model))
+        Ok(model.data.is_public.clone() || authenticate(auth_info, model))
     }
 }
 

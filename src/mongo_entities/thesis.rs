@@ -95,6 +95,10 @@ impl OwnedContent for Thesis {
         Self::plural()
     }
 
+    fn schema_name() -> &'static str {
+        Self::singular()
+    }
+
     fn new(submitted: Self::Post) -> Self {
         Self {
             intro: submitted.into(),
@@ -104,10 +108,6 @@ impl OwnedContent for Thesis {
 
     fn settable_path() -> &'static str {
         field!((data in Entity<Owned<Thesis>>).(content in Owned<Thesis>).(intro in Thesis))
-    }
-
-    fn schema_name() -> &'static str {
-        Self::singular()
     }
 
     async fn windup(

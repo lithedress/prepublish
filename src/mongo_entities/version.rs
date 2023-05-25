@@ -12,6 +12,8 @@ use mongo::{
 };
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
+use mongo::bson::to_bson;
+use mongo::entity::update::Update;
 
 use super::{review::Review, thesis::Thesis};
 
@@ -114,12 +116,12 @@ impl AttachedContent for Version {
         Self::plural()
     }
 
-    fn indexes() -> Indexes {
-        Indexes::new().with(Index::new(field!((data in Entity<Attached<Version>>).(content in Attached<Version>).(thesis_id in Version))).with_key(field!((data in Entity<Attached<Version>>).(content in Attached<Version>).(major_number in Version))).with_key(field!((data in Entity<Attached<Version>>).(content in Attached<Version>).(minor_number in Version))).with_option(IndexOption::Unique))
-    }
-
     fn schema_name() -> &'static str {
         Self::singular()
+    }
+
+    fn indexes() -> Indexes {
+        Indexes::new().with(Index::new(field!((data in Entity<Attached<Version>>).(content in Attached<Version>).(thesis_id in Version))).with_key(field!((data in Entity<Attached<Version>>).(content in Attached<Version>).(major_number in Version))).with_key(field!((data in Entity<Attached<Version>>).(content in Attached<Version>).(minor_number in Version))).with_option(IndexOption::Unique))
     }
 
     async fn windup(db: MongoDatabase, entity: &Entity<Attached<Self>>) -> MongoResult<()> {
@@ -148,5 +150,10 @@ impl Version {
         } else {
             Ok(None)
         }
+    }
+
+    pub(crate) fn set_state(mut update: Update, state: VersionState) -> MongoResult<Update> {
+        update.set.insert(field!((data in Entity<Attached<Version>>).(content in Attached<Version>).(state in Version)), to_bson(&state)?);
+        Ok(update)
     }
 }

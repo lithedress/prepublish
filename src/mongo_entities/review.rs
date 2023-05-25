@@ -41,12 +41,12 @@ impl AttachedContent for Review {
         Self::plural()
     }
 
-    fn indexes() -> Indexes {
-        Indexes::new().with(Index::new(field!((data in Entity<Attached<Review>>).(content in Attached<Review>).(version_id in Review))).with_key(field!(created_at in Entity<Attached<Review>>)))
-    }
-
     fn schema_name() -> &'static str {
         Self::singular()
+    }
+
+    fn indexes() -> Indexes {
+        Indexes::new().with(Index::new(field!((data in Entity<Attached<Review>>).(content in Attached<Review>).(version_id in Review))).with_key(field!(created_at in Entity<Attached<Review>>)))
     }
 
     async fn windup(_db: MongoDatabase, _id: &Entity<Attached<Self>>) -> MongoResult<()> {

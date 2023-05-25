@@ -14,6 +14,7 @@ mod common;
 mod paper_collection;
 mod thesis;
 mod version;
+mod review;
 
 pub(crate) fn new() -> Router<AppState> {
     aide::gen::in_context(|ctx| {
@@ -26,6 +27,8 @@ pub(crate) fn new() -> Router<AppState> {
         .merge(account::route())
         .merge(paper_collection::route())
         .merge(thesis::route())
+        .merge(version::route())
+        .merge(review::route())
         .route(
             "/api.json",
             routing::get(|Extension(api): Extension<Arc<OpenApi>>| async { Json(api) }),

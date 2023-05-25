@@ -18,6 +18,7 @@ crud = { path = "./crud" }
 crud-derive = { path = "./crud-derive" }
 futures-util = "0.3.28"
 futures_codec = "0.4.1"
+lettre = { version = "0.10.4", features = ["serde", "tokio1-native-tls"] }
 mongo = { path = "./mongo" }
 notice = { path = "./notice" }
 passwords = { version = "3.1.13", features = ["crypto"] }
